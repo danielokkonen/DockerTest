@@ -10,4 +10,7 @@ Containerized Blazor app using Docker to experiment with composing images, deplo
 ## Built with
 - Blazor
 - Docker
+- NUnit
 - Testcontainers
+- Respawn
+- Bogus
