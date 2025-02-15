@@ -2,7 +2,7 @@
 {
     public class DatabaseOptions
     {
-        public const string Section = "Database";
+        public const string SectionName = "Database";
 
         public required string Server { get; set; }
         public required string Username { get; set; }

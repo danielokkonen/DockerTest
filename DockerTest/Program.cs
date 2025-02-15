@@ -11,7 +11,7 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddDbContext<DatabaseContext>(options =>
 {
-    var databaseOptions = builder.Configuration.GetSection(DatabaseOptions.Section).Get<DatabaseOptions>();
+    var databaseOptions = builder.Configuration.GetSection(DatabaseOptions.SectionName).Get<DatabaseOptions>();
     
     if (databaseOptions != null)
     {
