@@ -36,7 +36,7 @@ jobs:
       run: dotnet tool install dotnet-ef --global --version 8.0.*
     
     - name: Generate DB migrations script
-      run: dotnet ef migrations script -o migrations.sql
+      run: dotnet ef migrations script -o migrations.sql --project ./DockerTest.Persistence
   docker:
 
     runs-on: ubuntu-lastest
