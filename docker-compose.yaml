@@ -6,6 +6,10 @@ services:
     container_name: docker-test-client
     ports:
       - "5000:8080"
+    environment:
+      - DOCKERTEST_DB_SERVER=${DOCKERTEST_DB_SERVER}
+      - DOCKERTEST_DB_USERNAME=${DOCKERTEST_DB_USERNAME}
+      - DOCKERTEST_DB_PASSWORD=${DOCKERTEST_DB_PASSWORD}
     depends_on:
       sql:
         condition: service_healthy
@@ -19,7 +23,7 @@ services:
       - "1433:1433" 
     environment:
       - ACCEPT_EULA=y
-      - MSSQL_SA_PASSWORD=VeryStrongPW3!
+      - MSSQL_SA_PASSWORD=${DOCKERTEST_DB_PASSWORD}
     healthcheck:
       test: /opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P "$${MSSQL_SA_PASSWORD}" -Q "SELECT 1" -b -o /dev/null
       interval: 10s
