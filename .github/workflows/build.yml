@@ -39,7 +39,7 @@ jobs:
       run: dotnet ef migrations script -o migrations.sql --project ./DockerTest.Persistence
   docker:
 
-    runs-on: ubuntu-lastest
+    runs-on: ubuntu-latest
     needs: build
 
     steps:
