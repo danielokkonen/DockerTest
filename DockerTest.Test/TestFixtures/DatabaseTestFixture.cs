@@ -1,6 +1,5 @@
 ﻿using DockerTest.Persistence;
 using DockerTest.Test.Containers;
-using DockerTest.Test.TestData;
 using Microsoft.EntityFrameworkCore;
 using Respawn;
 using Respawn.Graph;
@@ -12,6 +11,8 @@ namespace DockerTest.Test.TestFixtures
     {
         protected DatabaseContext _context;
         protected Respawner _respawner;
+
+        protected abstract void PrepareTestData();
 
         [OneTimeSetUp]
         public async Task OneTimeSetUp()
@@ -35,7 +36,7 @@ namespace DockerTest.Test.TestFixtures
 
             _context = CreateDatabaseContext(connectionString);
 
-            _context.Users.AddRange(UserTestData.Create(10));
+            PrepareTestData();
             await _context.SaveChangesAsync();
         }
 
