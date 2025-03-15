@@ -5,6 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var configuration = builder.Configuration
+    .AddEnvironmentVariables()
+    .Build();
+
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
@@ -15,6 +19,15 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
     
     if (databaseOptions != null)
     {
+        databaseOptions.Username = Environment.GetEnvironmentVariable("DOCKERTEST_DB_USERNAME") 
+            ?? throw new Exception("Environment Variable \"DOCKERTEST_DB_USERNAME\" is invalid");
+        
+        databaseOptions.Password = Environment.GetEnvironmentVariable("DOCKERTEST_DB_PASSWORD") 
+            ?? throw new Exception("Environment Variable \"DOCKERTEST_DB_PASSWORD\" is invalid");
+        
+        databaseOptions.Server = Environment.GetEnvironmentVariable("DOCKERTEST_DB_SERVER") 
+            ?? throw new Exception("Environment Variable \"DOCKERTEST_DB_SERVER\" is invalid");
+
         var connectionString = string.Format(
             databaseOptions.ConnectionString,
             databaseOptions.Server,
