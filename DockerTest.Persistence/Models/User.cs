@@ -12,12 +12,17 @@
         }
 
         public int Id { get; private set; }
-        public string Name { get; private set; }
-        public string Email { get; private set; }
+        public string? Name { get; private set; }
+        public string? Email { get; private set; }
 
-        /// <summary>
-        /// Update user name.
-        /// </summary>
+        /// <param id="id"></param>
+        /// <exception cref="ArgumentOutOfRangeException" />
+        public void UpdateId(int id)
+        {
+            ArgumentOutOfRangeException.ThrowIfNegative(id, nameof(id));
+            Id = id;
+        }
+
         /// <param name="name"></param>
         /// <exception cref="ArgumentException" />
         public void UpdateName(string name)
@@ -26,9 +31,6 @@
             Name = name;
         }
 
-        /// <summary>
-        /// Update user email.
-        /// </summary>
         /// <param email="email"></param>
         /// <exception cref="ArgumentException" />
         public void UpdateEmail(string email)

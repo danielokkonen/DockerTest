@@ -9,6 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DockerTest.Test", "DockerTe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{EB56CA04-C16F-4407-85EA-947661BDD75F}"
 	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build.yml = .github\workflows\build.yml
 		docker-compose.yaml = docker-compose.yaml
 		Dockerfile = Dockerfile
 	EndProjectSection

@@ -2,25 +2,37 @@ name: docker-test-app
 
 services:
   client:
-    image: docker-test-image
+    # image: docker-test-image
+    image: ghcr.io/danielokkonen/docker-test-image:latest
     container_name: docker-test-client
     ports:
       - "5000:8080"
+    environment:
+      DOCKERTEST_DB_SERVER: docker-test-sql,1433
+      DOCKERTEST_DB_USERNAME: ${DOCKERTEST_DB_USERNAME}
+      DOCKERTEST_DB_PASSWORD: ${DOCKERTEST_DB_PASSWORD}
     depends_on:
       sql:
         condition: service_healthy
         restart: true
+
   sql:
     image: "mcr.microsoft.com/mssql/server:2022-latest"
     container_name: docker-test-sql
+    volumes:
+      - sqldata:/var/opt/mssql
     ports:
       - "1433:1433" 
     environment:
-      - ACCEPT_EULA=y
-      - SA_PASSWORD=VeryStrongPW3!
+      ACCEPT_EULA: y
+      DOCKERTEST_DB_USERNAME: ${DOCKERTEST_DB_USERNAME}
+      MSSQL_SA_PASSWORD: ${DOCKERTEST_DB_PASSWORD}
     healthcheck:
-      test: /opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P "$${SA_PASSWORD}" -Q "SELECT 1" -b -o /dev/null
+      test: /opt/mssql-tools18/bin/sqlcmd -C -S localhost -U "$${DOCKERTEST_DB_USERNAME}" -P "$${MSSQL_SA_PASSWORD}" -Q "SELECT 1" -b -o /dev/null
       interval: 10s
       timeout: 3s
       retries: 10
       start_period: 10s
+
+volumes:
+  sqldata:
