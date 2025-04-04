@@ -1,8 +1,8 @@
-name: Build
+name: Build and push docker image
 
 on:
   push:
-    branches: [ "deploy-pipeline" ]
+    branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
 
